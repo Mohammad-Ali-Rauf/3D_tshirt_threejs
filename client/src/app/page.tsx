@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 
 // Components
-import Canvas from '@/canvas'
+import CanvasModel from '@/canvas'
 import Customizer from '@/components/Customizer'
 import { Button } from '@/components/ui/button'
 
@@ -71,7 +71,7 @@ const Home = (props: Props) => {
 					</motion.section>
 				)}
 			</AnimatePresence>
-			<Canvas />
+			<CanvasModel />
 			<Customizer />
 		</main>
 	)
