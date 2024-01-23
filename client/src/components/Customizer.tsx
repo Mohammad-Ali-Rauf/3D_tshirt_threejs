@@ -33,6 +33,27 @@ const Customizer = (props: Props) => {
 	const snap = useSnapshot(state)
 
 	const [isHovered, setIsHovered] = React.useState(false)
+	const [file, setFile] = React.useState('')
+	const [prompt, setPrompt] = React.useState('')
+	const [generatingImage, setGeneratingImage] = React.useState(false)
+	const [activeEditorTab, setActiveEditorTab] = React.useState('')
+	const [activeFilterTab, setActiveFilterTab] = React.useState({
+		logoShirt: true,
+		stylishShirt: false,
+	})
+
+	const generateTabContent = () => {
+		switch (activeEditorTab) {
+			case 'colorpicker':
+				return <ColorPicker />
+			case 'filepicker':
+				return <FilePicker />
+			case 'aipicker':
+				return <AIPicker />
+			default:
+				return null
+		}
+	}
 
 	return (
 		<AnimatePresence>
@@ -47,8 +68,10 @@ const Customizer = (props: Props) => {
 							<div className='editortabs-container tabs'>
 								{EditorTabs.map((tab) => (
 									// @ts-ignore
-									<Tab key={tab.name} tab={tab} handleClick={() => {}} />
+									<Tab key={tab.name} tab={tab} handleClick={() => setActiveEditorTab(tab.name)} />
 								))}
+
+								{generateTabContent()}
 							</div>
 						</div>
 					</motion.div>
