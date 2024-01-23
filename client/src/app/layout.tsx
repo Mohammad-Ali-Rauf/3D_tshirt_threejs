@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ThreeJS AI",
+  title: "Create your TShirt",
   description: "Created, designed, and developed by Mohammad Ali",
 };
 
