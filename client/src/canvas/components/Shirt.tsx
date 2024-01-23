@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React from 'react'
 
 // React Three Fiber
@@ -33,7 +35,11 @@ const Shirt = (props: Props) => {
         material={materials.lambert1}
         material-roughness={1}
         dispose={null}
-      />
+      >
+        {snap?.isFullTexture && (
+          <Decal position={[0,0,0]} rotation={[0,0,0]} />
+        )}
+      </mesh>
     </group>
   )
 }

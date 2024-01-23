@@ -36,6 +36,7 @@ const Home = (props: Props) => {
 					<motion.section className='home' {...slideAnimation('left')}>
 						<motion.header {...slideAnimation('down')}>
 							<Image
+							priority
 								src='/threejs.png'
 								alt='LOGO'
 								className='w-8 h-8 object-contain'
@@ -63,7 +64,10 @@ const Home = (props: Props) => {
 
 								<Button
 									onClick={() => (state.intro = false)}
-									className={`font-bold text-sm bg-[${snap?.color}] w-fit px-5 py-3 text-black hover:bg-[#dcae43]`}>
+									style={{ backgroundColor: snap?.color }}
+									onMouseEnter={() => (state.color = '#dcae43')}
+									onMouseLeave={() => (state.color = '#EFBD48')}
+									className={`font-bold text-sm w-fit px-5 py-3 text-black`}>
 									Customize It
 								</Button>
 							</motion.div>

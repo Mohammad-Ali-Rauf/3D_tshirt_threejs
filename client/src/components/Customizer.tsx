@@ -56,7 +56,10 @@ const Customizer = (props: Props) => {
 					>
 						<Button
 							onClick={() => (state.intro = true)}
-							className={`font-bold text-sm bg-[${snap?.color}] w-fit px-5 py-3 text-black hover:bg-[#dcae43]`}
+							style={{ backgroundColor: snap?.color }}
+							onMouseEnter={() => (state.color = '#dcae43')}
+							onMouseLeave={() => (state.color = '#EFBD48')}
+							className={`font-bold text-sm w-fit px-5 py-3 text-black`}
 						>
 							Go Back
 						</Button>
@@ -68,7 +71,13 @@ const Customizer = (props: Props) => {
 					>
 						{FilterTabs.map((tab) => (
 							// @ts-ignore
-							<Tab key={tab.name} isFilterTab isActiveTab="" tab={tab} handleClick={() => {}} />
+							<Tab
+								key={tab.name}
+								isFilterTab
+								isActiveTab=''
+								tab={tab}
+								handleClick={() => {}}
+							/>
 						))}
 					</motion.div>
 				</>
