@@ -25,6 +25,7 @@ import { fadeAnimation, slideAnimation } from '@/app/config/motion'
 // Components
 import { AIPicker, FilePicker, ColorPicker, Tab } from '.'
 import { Button } from './ui/button'
+import { toast } from './ui/use-toast'
 
 type Props = {}
 
@@ -47,12 +48,73 @@ const Customizer = (props: Props) => {
 			case 'colorpicker':
 				return <ColorPicker />
 			case 'filepicker':
-				return <FilePicker />
+				return <FilePicker file={file} setFile={setFile} readFile={readFile} />
 			case 'aipicker':
-				return <AIPicker />
+				return (
+					<AIPicker
+						prompt={prompt}
+						setPrompt={setPrompt}
+						generatingImage={generatingImage}
+						setGeneratingImage={setGeneratingImage}
+						handleSubmit={async () => {
+							if (!prompt) toast({
+								title: 'Please enter a prompt',
+								variant: 'destructive',
+								description: 'You must enter a prompt to generate an image',
+								duration: 1500
+							})
+
+							try {
+								
+							} catch (error) {
+								
+							}
+						}}
+					/>
+				)
 			default:
 				return null
 		}
+	}
+
+	const handleActiveFilterTab = (tabName: string) => {
+		switch (tabName) {
+			case 'logoShirt':
+				state.isLogoTexture = !activeFilterTab[tabName]
+				break
+			case 'stylishShirt':
+				state.isFullTexture = !activeFilterTab[tabName]
+				break
+			default:
+				state.isLogoTexture = true
+				state.isFullTexture = false
+				break
+		}
+
+		// Update Active Filter Tab in UI
+		setActiveFilterTab((prev) => ({
+			...prev,
+			// @ts-ignore
+			[tabName]: !prev[tabName],
+		}))
+	}
+
+	const handleDecals = (type: keyof typeof DecalTypes, result: any) => {
+		const decalType = DecalTypes[type]
+
+		state[decalType.stateProperty as keyof Object] = result
+
+		if (!activeFilterTab[decalType.filterTab as keyof Object]) {
+			handleActiveFilterTab(decalType.filterTab)
+		}
+	}
+
+	const readFile = async (type: keyof typeof DecalTypes) => {
+		try {
+			const result = await reader(file)
+			handleDecals(type, result)
+			setActiveEditorTab('')
+		} catch (err) {}
 	}
 
 	return (
@@ -68,7 +130,11 @@ const Customizer = (props: Props) => {
 							<div className='editortabs-container tabs'>
 								{EditorTabs.map((tab) => (
 									// @ts-ignore
-									<Tab key={tab.name} tab={tab} handleClick={() => setActiveEditorTab(tab.name)} />
+									<Tab
+										key={tab.name}
+										tab={tab}
+										handleClick={() => setActiveEditorTab(tab.name)}
+									/>
 								))}
 
 								{generateTabContent()}
@@ -101,9 +167,10 @@ const Customizer = (props: Props) => {
 							<Tab
 								key={tab.name}
 								isFilterTab
-								isActiveTab=''
+								// @ts-ignore
+								isActiveTab={activeFilterTab[tab.name]}
 								tab={tab}
-								handleClick={() => {}}
+								handleClick={() => handleActiveFilterTab(tab.name)}
 							/>
 						))}
 					</motion.div>
