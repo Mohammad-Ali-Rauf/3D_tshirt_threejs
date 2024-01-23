@@ -32,6 +32,8 @@ const Customizer = (props: Props) => {
 	// Using Global State Store
 	const snap = useSnapshot(state)
 
+	const [isHovered, setIsHovered] = React.useState(false)
+
 	return (
 		<AnimatePresence>
 			{!snap.intro && (
@@ -56,10 +58,12 @@ const Customizer = (props: Props) => {
 					>
 						<Button
 							onClick={() => (state.intro = true)}
-							style={{ backgroundColor: snap?.color }}
-							onMouseEnter={() => (state.color = '#dcae43')}
-							onMouseLeave={() => (state.color = '#EFBD48')}
-							className={`font-bold text-sm w-fit px-5 py-3 text-black`}
+							style={{
+								backgroundColor: isHovered ? '#59b2e2' : '#48BDEF',
+							}}
+							onMouseEnter={() => setIsHovered(true)}
+							onMouseLeave={() => setIsHovered(false)}
+							className={`font-bold text-sm w-fit px-5 py-3 `}
 						>
 							Go Back
 						</Button>

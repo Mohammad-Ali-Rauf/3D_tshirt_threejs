@@ -22,12 +22,15 @@ import {
 	headTextAnimation,
 	slideAnimation,
 } from '@/app/config/motion'
+import { cn } from '@/lib/utils'
 
 type Props = {}
 
 const Home = (props: Props) => {
 	// Using Global State Store
 	const snap = useSnapshot(state)
+
+	const [isHovered, setIsHovered] = React.useState(false)
 
 	return (
 		<main className='app transition-all ease-in'>
@@ -36,7 +39,7 @@ const Home = (props: Props) => {
 					<motion.section className='home' {...slideAnimation('left')}>
 						<motion.header {...slideAnimation('down')}>
 							<Image
-							priority
+								priority
 								src='/threejs.png'
 								alt='LOGO'
 								className='w-8 h-8 object-contain'
@@ -64,10 +67,13 @@ const Home = (props: Props) => {
 
 								<Button
 									onClick={() => (state.intro = false)}
-									style={{ backgroundColor: snap?.color }}
-									onMouseEnter={() => (state.color = '#dcae43')}
-									onMouseLeave={() => (state.color = '#EFBD48')}
-									className={`font-bold text-sm w-fit px-5 py-3 text-black`}>
+									style={{
+										backgroundColor: isHovered ? '#59b2e2' : '#48BDEF',
+									}}
+									onMouseEnter={() => setIsHovered(true)}
+									onMouseLeave={() => setIsHovered(false)}
+									className={`font-bold text-sm w-fit px-5 py-3`}
+								>
 									Customize It
 								</Button>
 							</motion.div>
