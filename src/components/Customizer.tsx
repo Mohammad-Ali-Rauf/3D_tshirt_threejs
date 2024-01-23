@@ -65,9 +65,17 @@ const Customizer = (props: Props) => {
 							})
 
 							try {
-								
-							} catch (error) {
-								
+								// TODO: Call the AI Backend to generate an image
+							} catch (err: any) {
+								toast({
+									title: 'An error is coming in the way.',
+									variant: 'destructive',
+									description: err.message,
+									duration: 1500
+								})
+							} finally {
+								setGeneratingImage(false)
+								setActiveEditorTab('')
 							}
 						}}
 					/>
